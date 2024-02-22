@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX POST Example with JSON and Display Response on Page Load</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row" id="responseContainer">
+            <!-- Response cards will be dynamically added here -->
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            // Function to fetch data and display response in cards
+            function fetchDataAndDisplay(response) {
+                // Clear previous response
+                $('#responseContainer').empty();
+                
+                // Iterate over the response.data array
+                $.each(response.data, function(index, item){
+                    // Choose a different color for each card
+                    var cardColorClass = index % 2 === 0 ? 'bg-primary' : 'bg-secondary'; // Example: Alternate between primary and secondary colors
+                    
+                    // Construct card HTML
+                    var cardHtml = `
+                        <div class="col-md-4 mb-4">
+                            <div class="card text-white ${cardColorClass}">
+                                <div class="card-body">
+                                    <h5 class="card-title">${item.name}</h5>
+                                </div>
+                            </div>
+                        </div>`;
+                    
+                    // Append card to the container
+                    $('#responseContainer').append(cardHtml);
+                });
+            }
+
+            var jsonData = JSON.stringify({ });
+
+            // Function to handle AJAX call
+            function fetchData() {
+                $.ajax({
+                    type: "POST",
+                    url: "http://127.0.0.1:5000/category/get",
+                    contentType: "application/json",
+                    data: jsonData,
+                    dataType: "json", // Expecting JSON response
+                    success: function(response){
+                        // Handle successful response here.
+                        console.log(response);
+                        // Display the response in the page
+                        fetchDataAndDisplay(response);
+                    },
+                    error: function(xhr, status, error){
+                        // Handle error here.
+                        console.error(xhr.responseText);
+                        $('#responseContainer').html("Error: " + xhr.responseText);
+                    }
+                });
+            }
+
+            // Call the function to fetch data and display response on page load
+            fetchData();
+        });
+    </script>
+</body>
+</html>

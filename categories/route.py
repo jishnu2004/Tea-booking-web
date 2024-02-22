@@ -452,3 +452,43 @@ def update_product_category_by_name():
             "status_code": 500,
             "description": f"Error updating product category: {err}"
         }), 500
+
+
+@tea.route("/category/delete", methods=["POST"])
+def delete_category_by_name():
+    try:
+        # Extract product name from request JSON
+        request_json = request.get_json()
+        category_name = request_json.get("category_name")
+
+        if not category_name:
+            return jsonify({
+                "status": False,
+                "status_code": 400,
+                "description": "category name is required in the request JSON"
+            }), 400
+
+        # Retrieve the product from the database based on the product name
+        category = Category.objects(name=category_name).first()
+
+        if not category:
+            return jsonify({
+                "status": False,
+                "status_code": 404,
+                "description": f"Category  '{category_name}' not found"
+            }), 404
+
+        # Delete the product
+        category.delete()
+
+        return jsonify({
+            "status": True,
+            "status_code": 200,
+            "description": f"Product '{category_name}' deleted successfully"
+        }), 200
+    except Exception as err:
+        return jsonify({
+            "status": False,
+            "status_code": 500,
+            "description": f"Error deleting product: {err}"
+        }), 500

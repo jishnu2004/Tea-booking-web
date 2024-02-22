@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category create</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Create Category</h5>
+                        <form id="myForm">
+                            <div class="form-group">
+                                <label for="name">Category Name:</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <div id="successMessage" class="alert alert-success mt-3" style="display: none;">Category created successfully!</div>
+                        <div id="errorMessage" class="alert alert-danger mt-3" style="display: none;">Error creating category. Please try again.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#myForm").submit(function(event){
+                // Prevent the form from submitting via the browser.
+                event.preventDefault();
+
+                // Manually construct the JSON array.
+                var jsonData = JSON.stringify({
+                    name: $("#name").val(),
+                });
+
+                // Send the AJAX request.
+                $.ajax({
+                    type: "POST",
+                    url: "http://127.0.0.1:5000/category/create",
+                    contentType: "application/json",
+                    data: jsonData,
+                    dataType: "json", // Expecting JSON response
+                    success: function(response){
+                        // Clear previous table contents
+                        console.log(response);
+                        $('#successMessage').show(); // Show success message
+                        $('#errorMessage').hide(); // Hide error message
+                    },
+                    error: function(xhr, status, error){
+                        // Handle error here.
+                        console.error(xhr.responseText);
+                        $('#successMessage').hide(); // Hide success message
+                        $('#errorMessage').show(); // Show error message
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

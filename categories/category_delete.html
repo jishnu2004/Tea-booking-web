@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Category</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Delete Category</h2>
+        <form id="deleteForm">
+            <div class="form-group">
+                <label for="categoryName">Category Name:</label>
+                <input type="text" class="form-control" id="categoryName" name="categoryName" required>
+            </div>
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+        <div id="responseContainer" class="mt-4">
+            <!-- Response message will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            // Function to handle AJAX call for deleting category
+            function deleteCategory(categoryName) {
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:5000/category/delete",
+                    contentType: "application/json",
+                    data: JSON.stringify({ category_name: categoryName }),
+                    dataType: "json",
+                    success: function(response){
+                        console.log(response); // Log the response
+                        // Display response message
+                        $('#responseContainer').html('<div class="alert alert-success" role="alert">Category deleted successfully.</div>');
+                        // Clear input field after successful deletion
+                        $('#categoryName').val('');
+                    },
+                    error: function(xhr, status, error){
+                        console.error(xhr.responseText); // Log the error
+                        $('#responseContainer').html('<div class="alert alert-danger" role="alert">Error deleting category.</div>');
+                    }
+                });
+            }
+
+            // Function to handle form submission
+            $('#deleteForm').submit(function(event) {
+                event.preventDefault(); // Prevent form from submitting via browser
+                var categoryName = $('#categoryName').val();
+                if(confirm("Are you sure you want to delete category '" + categoryName + "'?")) {
+                    deleteCategory(categoryName); // Call deleteCategory function
+                }
+            });
+        });
+    </script>
+</body>
+</html>
