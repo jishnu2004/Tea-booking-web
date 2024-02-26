@@ -41,14 +41,14 @@
                     $('#responseContainer').append(cardHtml);
                 });
             }
-
             var jsonData = JSON.stringify({ });
-
             // Function to handle AJAX call
-            function fetchData() {
+            function fetchData(category) {
+                var jsonData = JSON.stringify({ category: category });
+
                 $.ajax({
                     type: "POST",
-                    url: "http://127.0.0.1:5000/category/get",
+                    url: "http://127.0.0.1:5000/product/get", // Assuming this is the endpoint for fetching products
                     contentType: "application/json",
                     data: jsonData,
                     dataType: "json", // Expecting JSON response
@@ -66,8 +66,14 @@
                 });
             }
 
+            // Event listener for category clicks
+            $('.category').click(function() {
+                var category = $(this).data('category');
+                fetchData(category);
+            });
+
             // Call the function to fetch data and display response on page load
-            fetchData();
+            fetchData(); // Assuming you want to fetch data on page load
         });
     </script>
 </body>

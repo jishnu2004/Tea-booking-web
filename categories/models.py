@@ -11,6 +11,7 @@ class Category(Document):
 class Product(Document):
     name = StringField(required=True)
     category = ReferenceField(Category)
+    imgurl=StringField(default="")
     # category =StringField(required=True)
     date_created = DateTimeField(default=datetime.datetime.utcnow)
     date_modified = DateTimeField(default=datetime.datetime.utcnow)

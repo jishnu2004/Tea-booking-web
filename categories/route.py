@@ -67,25 +67,25 @@ def show_list():
 #         return jsonify(responce)
 
 
-
-# @tea.route("/product/get", methods=["POST"])
-# def product_list():
-#     try:
-#         request_json = request.get_json()
-#         product_list = json.loads(Product.objects().to_json())
-#         responce={}    
-#         responce['status'] = True
-#         responce['status_code'] = 200
-#         responce['data'] = product_list
-#         responce['description'] = 'creation success'
-#         return jsonify(responce)
-#     except Exception as err:
-#         responce={}    
-#         responce['status'] = False
-#         responce['status_code'] = 304
-#         responce['data'] = []
-#         responce['description'] = 'A Batch with this name exists'+str(err)
-#         return jsonify(responce)
+# print all products
+@tea.route("/product/get", methods=["POST"])
+def product_list():
+    try:
+        request_json = request.get_json()
+        product_list = json.loads(Product.objects().to_json())
+        responce={}    
+        responce['status'] = True
+        responce['status_code'] = 200
+        responce['data'] = product_list
+        responce['description'] = 'creation success'
+        return jsonify(responce)
+    except Exception as err:
+        responce={}    
+        responce['status'] = False
+        responce['status_code'] = 304
+        responce['data'] = []
+        responce['description'] = 'A Batch with this name exists'+str(err)
+        return jsonify(responce)
 
 
 
@@ -95,6 +95,7 @@ def product_create():
         request_json = request.get_json()
         category_name = request_json.get("category_name")
         product_name = request_json.get("product_name")
+        myurl = request_json.get("myurl")
 
         # Retrieve the category from the database
         category = Category.objects(name=category_name).first()
@@ -107,7 +108,7 @@ def product_create():
             }), 404
 
         # Create a new product instance
-        product = Product(name=product_name, category=category)
+        product = Product(name=product_name, imgurl=myurl, category=category)
         product.save()
 
         return jsonify({
@@ -121,6 +122,7 @@ def product_create():
             "status_code": 500,
             "description": f"Error adding product: {err}"
         }), 500
+
 
 
 

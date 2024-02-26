@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Add Product</h2>
+        <form id="productForm">
+            <div class="form-group">
+                <label for="productName">Product Name:</label>
+                <input type="text" class="form-control" id="productName" name="productName">
+            </div>
+            <div class="form-group">
+                <label for="categoryName">Category Name:</label>
+                <input type="text" class="form-control" id="categoryName" name="categoryName">
+            </div>
+            <div class="form-group">
+                <label for="imgUrl">Image URL:</label>
+                <input type="text" class="form-control" id="imgUrl" name="imgUrl">
+            </div>
+            <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+        <div id="responseContainer" class="mt-3"></div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#productForm').submit(function(event){
+                // Prevent the form from submitting normally
+                event.preventDefault();
+
+                // Get form data
+                var formData = {
+                    product_name: $('#productName').val(),
+                    category_name: $('#categoryName').val(),
+                    myurl: $('#imgUrl').val()
+                };
+
+                // Send the data using AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://127.0.0.1:5000/product/category_create', // Replace with your server endpoint
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function(response){
+                        $('#responseContainer').html('<div class="alert alert-success" role="alert">Product added successfully!</div>');
+                        // Clear form fields
+                        $('#productName').val('');
+                        $('#categoryName').val('');
+                        $('#imgUrl').val('');
+                    },
+                    error: function(xhr, status, error){
+                        $('#responseContainer').html('<div class="alert alert-danger" role="alert">Error adding product: ' + error + '</div>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
