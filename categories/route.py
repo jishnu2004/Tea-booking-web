@@ -4,7 +4,7 @@ from tea import tea
 #db import
 from tea import db
 # models import 
-from .models import *
+from .models import * 
 
 @tea.route("/category/create", methods=["POST"])
 def categoryCreate():

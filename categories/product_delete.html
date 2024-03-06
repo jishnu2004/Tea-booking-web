@@ -40,6 +40,7 @@
                         $('#responseContainer').html('<div class="alert alert-success" role="alert">Product deleted successfully!</div>');
                         // Clear form field
                         $('#productName').val('');
+                        window.location.href = 'all_product_show.html';
                     },
                     error: function(xhr, status, error){
                         $('#responseContainer').html('<div class="alert alert-danger" role="alert">Error deleting product: ' + error + '</div>');

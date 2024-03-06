@@ -54,6 +54,7 @@
                         $('#productName').val('');
                         $('#categoryName').val('');
                         $('#imgUrl').val('');
+                        window.location.href = 'all_product_show.html';
                     },
                     error: function(xhr, status, error){
                         $('#responseContainer').html('<div class="alert alert-danger" role="alert">Error adding product: ' + error + '</div>');

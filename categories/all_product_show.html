@@ -14,6 +14,12 @@
         </div>
     </div>
 
+    <!-- Buttons -->
+    <div class="container mt-4">
+        <button id="deleteProductBtn" class="btn btn-danger">Delete Product</button>
+        <button id="productCreateBtn" class="btn btn-success">Product Create</button>
+    </div>
+
     <script>
         $(document).ready(function(){
             // Function to fetch data and display response in cards
@@ -41,7 +47,7 @@
                     $('#responseContainer').append(cardHtml);
                 });
             }
-            var jsonData = JSON.stringify({ });
+
             // Function to handle AJAX call
             function fetchData(category) {
                 var jsonData = JSON.stringify({ category: category });
@@ -74,6 +80,18 @@
 
             // Call the function to fetch data and display response on page load
             fetchData(); // Assuming you want to fetch data on page load
+
+            // Event listener for Delete Product button click
+            $('#deleteProductBtn').click(function() {
+                // Add your logic for deleting a product here
+                window.location.href = 'product_delete.html';
+            });
+
+            // Event listener for Product Create button click
+            $('#productCreateBtn').click(function() {
+                // Add your logic for creating a product here
+                window.location.href = 'product_create_with_category.html';
+            });
         });
     </script>
 </body>
