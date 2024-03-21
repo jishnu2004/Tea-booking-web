@@ -1,0 +1,49 @@
+.box2 {
+    background-color: #f7f9fa;
+    border: 1px solid black;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.video-table {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+.video-lessons {
+    border: 1px solid white;
+    color: black;
+    font-size: large;
+    padding: 5%;
+    width: 100%;
+    height: auto;
+}
+
+.video-lessons:hover {
+    cursor: pointer;
+    background-color:#d1d7dc;
+}
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-top: 56.25%;
+}
+
+.responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+textarea {
+    width: 100%;
+    height: auto;
+}
